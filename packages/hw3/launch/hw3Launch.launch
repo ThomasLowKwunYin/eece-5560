@@ -1,8 +1,0 @@
-<launch>
-
-<include file="$(find mystery_package)/launch/launch_mystery.launch"/>
- <group ns="hw3">
-  <node pkg="hw3" name="hw3Publisher" type="hw3Pub.py"/>
-  <node pkg="hw3" name="hw3Subscriber" type="hw3Sub.py"/>
- </group>
-</launch>
