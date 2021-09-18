@@ -8,7 +8,7 @@ class Listener:
 		rospy.Subscriber("/mystery/output1", Float32, self.callback)
 	
 	def callback(self,msg):
-		rospy.loginfo(f"{rospy.get_caller_id()}+I heard {msg.data}")
+		rospy.loginfo(f"{rospy.get_caller_id()} I heard {msg.data}")
 
 if __name__ == '__main__':
 	rospy.init_node('listener', anonymous = True)
