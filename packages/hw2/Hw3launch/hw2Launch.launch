@@ -1,0 +1,7 @@
+<launch>
+
+<include file="$(find hw2)/launch/hw2launch.launch"/>
+ <group ns="hw2">
+  <node pkg="hw2" name="hw3Node" type="hw3Node.py"/>
+ </group>
+</launch>
