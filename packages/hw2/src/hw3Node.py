@@ -7,7 +7,7 @@ from mystery_package.msg import UnitsLabelled
 class Node:
 	def __init__(self):
 		rospy.Subscriber("/mystery/output2", UnitsLabelled, self.callback)
-		self.pub = rospy.Publisher('/mystery/output2', Float32, queue_size=10)
+		self.pub = rospy.Publisher('Somewhere', UnitsLabelled, queue_size=10)
 		self.pub_msg = UnitsLabelled()
 		self.pub_msg.units = "feets"
 	
