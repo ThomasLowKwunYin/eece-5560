@@ -1,0 +1,11 @@
+<launch>
+
+<include file="$(find mystery_package)/launch/launch_mystery.launch"/>
+ <group ns="hw2">
+  <remap from="/mystery/input" to="/mystery_node"/>
+  <node pkg="hw2" name="hw2Publisher" type="hw2Publisher.py"/>
+  <node pkg="hw2" name="hw2Subscriber" type="hw2Subscriber.py"/>
+  <node pkg="hw2" name="hw3Node" type="hw4Node.py"/>
+  <param name="unit_param" type="string" value="10."/>
+ </group>
+</launch>
