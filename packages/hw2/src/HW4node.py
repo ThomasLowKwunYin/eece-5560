@@ -17,7 +17,7 @@ class Node:
 		else:
 			self.foo = "default"
 		
-		if self.foo is "Feets"
+		if self.foo is "Feets":
 			self.pub_msg.value = msg.value*3.28
 			self.pub_msg.units = "Feets"
 		elif self.foo is "Meters":
