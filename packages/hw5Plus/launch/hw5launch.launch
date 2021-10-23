@@ -1,5 +1,3 @@
 <launch>
- <group ns="hw5">
-  <node pkg="hw5" name="hw5Node" type="hw5Node.py"/>
- </group>
+  <node pkg="hw5Plus" name="hw5Node" type="hw5Node.py"/>
 </launch>

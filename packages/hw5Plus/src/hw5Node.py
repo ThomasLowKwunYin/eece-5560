@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 
 import rospy
-from hw5Plus.msg import Vector2D
+from duckietown_msgs.msg import Vector2D
 
 class Node:
 	def __init__(self):
 		self.converted = 0
 		self.robotFrame= Vector2D()
 		self.worldFrame= Vector2D()
-		rospy.Subscriber('duckietown_msgs/Vector2D ', Vector2D, self.talk)
+		rospy.Subscriber('Sensor_Frame', Vector2D, self.talk)
 		self.pub1 = rospy.Publisher('Robot_Frame', Vector2D, queue_size=10)
 		self.pub2 = rospy.Publisher('World_Frame', Vector2D, queue_size=10)
 
