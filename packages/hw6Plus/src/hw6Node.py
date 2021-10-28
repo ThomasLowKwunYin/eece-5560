@@ -17,8 +17,8 @@ class Node:
 
 	
 	def talk(self,msg):
-		ds = (self.msg.dist_wheel_left + self.msg.dist_wheel_right)/2		
-		dTheta=(self.msg.dist_wheel_right-self.msg.dist_wheel_left)/0.1
+		ds = (msg.dist_wheel_left + msg.dist_wheel_right)/2		
+		dTheta=(msg.dist_wheel_right-msg.dist_wheel_left)/0.1
 		dx =ds*math.cos(self.pub_msg.theta+dTheta/2)
 		dy =ds*math.sin  (self.pub_msg.theta+dTheta/2)
 		self.pub_msg.x = self.pub_msg.x + dx

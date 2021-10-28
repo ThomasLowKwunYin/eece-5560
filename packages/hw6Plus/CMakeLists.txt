@@ -9,7 +9,7 @@ project(hw6Plus)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   odometry_hw
-  rosccp
+  roscpp
   rospy
   std_msgs
 )
@@ -106,7 +106,7 @@ find_package(catkin REQUIRED COMPONENTS
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES hw6Plus
-#  CATKIN_DEPENDS odometry_hw rosccp rospy std_msgs
+#  CATKIN_DEPENDS odometry_hw roscpp rospy std_msgs
 #  DEPENDS system_lib
 )
 

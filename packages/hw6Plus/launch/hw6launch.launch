@@ -1,0 +1,7 @@
+<launch>
+
+<include file="$(find odometry_hw)/launch/odom_hw.launch"/>
+ <group ns="hw6">
+  <node pkg="hw6Plus" name="hw6Node" type="hw6Node.py"/>
+ </group>
+</launch>
