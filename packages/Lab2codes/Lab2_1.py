@@ -37,7 +37,7 @@ class Node:
 				
       
 if __name__ == '__main__':
-	rospy.init_node('hw6Node', anonymous=True)
+	rospy.init_node('Lab2_1', anonymous=True)
 	Node()
 	rospy.spin()
       
