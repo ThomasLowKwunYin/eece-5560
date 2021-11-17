@@ -15,11 +15,11 @@ class Node:
 	
 	def talk(self,msg):
 	
-		self.robotFrame.xvalue = -1*self.msg.xvalue-2
-		self.robotFrame.yvalue = -1*self.msg.yvalue
+		self.robotFrame.xvalue = -1*msg.xvalue-2
+		self.robotFrame.yvalue = -1*msg.yvalue
 		
-		self.worldFrame.xvalue = 0.707*self.msg.xvalue+2
-		self.worldFrame.yvalue = 0.707*self.msg.yvalue+7
+		self.worldFrame.xvalue = 0.707*msg.xvalue+2
+		self.worldFrame.yvalue = 0.707*msg.yvalue+7
 		
 		self.pub1.publish(self.robotFrame)
 		self.pub2.publish(self.worldFrame)
