@@ -23,16 +23,18 @@ class node:
     	imgAxisY = len(cv_img)
     	imgYHalf = int(imgAxisY/2)
     	imgAxisX = len(cv_img[0])
-    	cropped = cv_img[imgYHalf:imgAxisY, 0:imgAxisX]
+    	cropped = cv_img[int(imgAxisY/2):imgAxisY, 0:imgAxisX]
     	
-    	white  = cv2.inRange(hsv_img, (0,0,0),(180,25,255))
-        white  = cv2.erode(white,self.ero_k)
-        white  = cv2.dilate(white,self.dil_k)
-        white  = cv2.bitwise_and(cropped, cropped, mask=white)
-        yellow = cv2.inRange(hsv_img, (30,100,150),(40,255,255))
-        yellow = cv2.erode(yellow,self.ero_k)
-        yellow = cv2.dilate(yellow,self.dil_k)
-        yellow = cv2.bitwise_and(cropped, cropped, mask=yellow)
+    	whiteFilter  = cv2.inRange(hsv_img, (0,0,0),(180,25,255))
+        yellowFilter = cv2.inRange(hsv_img, (30,100,150),(40,255,255))
+        
+	crop = self.bridge.cv2_to_imgmsg(cropped,"bgr8")
+	whiteMask = self.bridge.cv2_to_imgmsg(whiteFilter, "mono8")
+	yellowMask = self.bridge.cv2_to_imgmsg(yellowFilter , "mono8")
+        
+	self.pub_cropped.publish(crop)
+	self.pub_white.publish(whiteMask)
+	self.pub_yellow.publish(yellowMask)
     	
 if __name__ == "__main__":
     rospy.init_node("node", anonymous=True)
