@@ -3,6 +3,7 @@
   <group ns="$(env VEHICLE_NAME)"> 
 
     <node pkg="lab2" name="Lab2_3" type="Lab2_3.py"/>
+    <node pkg="lab2" name="Lab2_4" type="Lab2_4.py"/>
 
   </group>
 

@@ -2,7 +2,7 @@
 
   <group ns="$(env VEHICLE_NAME)"> 
 
-    <<node pkg="lab2" name="Lab2_2" type="Lab2_2.py"/>
+    <node pkg="lab2" name="Lab2_2" type="Lab2_2.py"/>
 
   </group>
 

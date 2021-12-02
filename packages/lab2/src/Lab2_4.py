@@ -4,7 +4,7 @@ import math
 import rospy
 import numpy as np
 import time
-from duckietown_msgs.msg import WheelsCmd
+from duckietown_msgs.msg import WheelsCmdStamped.msg
 from odometry_hw.msg import  Pose2D
 
 
@@ -14,7 +14,7 @@ class Node:
 		self.pub_msg.x = 0
 		self.pub_msg.y = 0
 		self.pub_msg.theta = 0
-		rospy.Subscriber('/dist_wheel', WheelsCmd, self.talk)
+		rospy.Subscriber('/wheels_driver_node/wheels_cmd', WheelsCmd, self.talk)
 		self.pub = rospy.Publisher('/pose', Pose2D, queue_size=10)
 		self.startTime = time.time()
 
@@ -33,6 +33,6 @@ class Node:
 		self.pub.publish(self.pub_msg)
 
 if __name__ == '__main__':
-	rospy.init_node('hw6Node', anonymous=True)
+	rospy.init_node('Lab2_4', anonymous=True)
 	Node()
 	rospy.spin()
