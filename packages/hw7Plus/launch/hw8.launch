@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="hw7Plus" name="hw7Node" type="hw7Node.py" />
+  <node pkg="hw7Plus" name="hw8" type="hw8.py" />
+  <node name="image_pub" pkg="image_processing_hw" type="image_pub.py" args="$(find image_processing_hw)/sample_images/image$(arg index).png" />
+</launch>
