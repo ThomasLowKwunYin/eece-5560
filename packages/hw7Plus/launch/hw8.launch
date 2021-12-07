@@ -1,7 +1,5 @@
 <launch>
-
-<include file="$(find hw7Plus)/launch/hw7.launch"/>
-  <group ns="hw8">
-   <node pkg="hw7Plus" name="hw8" type="hw8.py" />
-  </group>
+  <node pkg="hw7Plus" name="hw7Node" type="hw7Node.py" />
+  <node name="image_pub" pkg="image_processing_hw" type="image_pub.py" args="$(find image_processing_hw)/sample_images/image$(arg index).png" />
+  <node pkg="hw7Plus" name="hw8" type="hw8.py" />
 </launch>
