@@ -33,6 +33,7 @@ class node:
 		
 		self.whiteMask.publish(whiteMask)
 		self.yellowMask.publish(yellowMask)
+		self.crop.publish(crop)
     	
 if __name__ == "__main__":
 	rospy.init_node("node", anonymous=True)

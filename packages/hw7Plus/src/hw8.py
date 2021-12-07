@@ -2,7 +2,7 @@
 
 import rospy
 import cv2
-from numpy import np
+import numpy as np
 from sensor_msgs.msg import Image
 from cv_bridge import CvBridge
 
@@ -18,58 +18,54 @@ class node:
 		self.edges = rospy.Publisher("/image_edges", Image, queue_size=10)
 		self.white = rospy.Publisher("/image_lines_white", Image, queue_size=10)
 		self.yellow = rospy.Publisher("/image_lines_yellow", Image, queue_size=10)
-		self.both = rospy.Publisher("/image_lines_all", Image, queue_size=10)
-
+		
 		self.yellowImg = None
 		self.whiteImg = None
-
-		ts = message_filters.TimeSynchronizer([cropped, yellow_im, white_im], 10)
-		ts.registerCallback(self.callback)
+	
 
 	def yellow(self, msg):
-        	self.yellowImg = cv2.cvtColor(msg, cv2.COLOR_BGR2GRAY)
+        	self.yellowImg = self.bridge.imgmsg_to_cv2(msg, "mono8")
 
 	def white(self, msg):
-		self.whiteImg = cv2.cvtColor(msg, cv2.COLOR_BGR2GRAY)
-	def crop(self, msg)
-		edgedImg= self.bridge.imgmsg_to_cv2(msg, "bgr8")
-        	lineImg = cv2.Canny(edgedImg, 0, 255)
-		self.edges.publish(self.bridge.cv2_to_imgmsg(lineImg, "8UC1"))
+		self.whiteImg = self.bridge.imgmsg_to_cv2(msg,"mono8")
 		
-		yellowOut = cv2.bitwise_and(lineImg, lineImg, mask = self.yellowImg)
-		whiteOut = cv2.bitwise_and(lineImg, lineImg, mask = self.whiteImg)
-		self.yellow.publish(self.bridge.cv2_to_imgmsg(yellowOut, "8UC1"))
-		self.white.publish(self.bridge.cv2_to_imgmsg(whiteOut, "8UC1"))
+	def output_lines(self, original_image, lines):
+		output = np.copy(original_image)
+		if lines is not None:
+			for i in range(len(lines)):
+				l = lines[i][0]
+				cv2.line(output, (l[0],l[1]), (l[2],l[3]), (255,0,0), 2, cv2.LINE_AA)
+				cv2.circle(output, (l[0],l[1]), 2, (0,255,0))
+				cv2.circle(output, (l[2],l[3]), 2, (0,0,255))
+		return output
 		
-		yellowHough = cv2.HoughLinesP(yellow_lanes, 1, np.pi / 180, 5, minLineLength=5, maxLineGap=5)
-		whiteHough = cv2.HoughLinesP(white_lanes, 1, np.pi / 180, 5, minLineLength=5, maxLineGap=5)
+	def crop(self, msg):
 		
-		yellowMarker = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-		for line in yellowHough:
-			x1, x2, y1, y2 = line[0]
-			cv2.line(yellowMarker, (x1, y1), (x2, y2), (255, 0, 0), 2)
-			cv2.circle(yellowMarker, (x1, y1), 2, (0, 255, 255), 2)
-			cv2.circle(yellowMarker, (x2, y2), 2, (0, 0, 255), 2)
-		yellowFilter = self.bridge.cv2_to_imgmsg(yellowMarker, "bgr8")
+		cropImg= self.bridge.imgmsg_to_cv2(msg, "bgr8")
 		
-		whiteMarker = self.bridge.imgmsg_to_cv2(msg, "bgr8")
-		for line in whiteHough:
-			x1, x2, y1, y2 = line[0]
-			cv2.line(whiteMarker, (x1, y1), (x2, y2), (0, 255, 0), 2)
-			cv2.circle(whiteMarker, (x1, y1), 2, (0, 0, 255), 2)
-			cv2.circle(whiteMarker, (x2, y2), 2, (255, 0, 255), 2)
-		whiteFilter = self.bridge.cv2_to_imgmsg(whiteMarker, "bgr8")
-            
-		for line in yellowHough:
-			x1, x2, y1, y2 = line[0]
-			cv2.line(whiteMarker, (x1, y1), (x2, y2), (0, 0, 255), 2)
-			cv2.circle(whiteMarker, (x1, y1), 2, (0, 255, 0), 2)
-			cv2.circle(whiteMarker, (x2, y2), 2, (255, 255, 0), 2)
-		allFilter = self.bridge.cv2_to_imgmsg(whiteMarker, "bgr8")
+		cannyImg = cv2.Canny(cropImg, 100, 255)
+		self.edges.publish(self.bridge.cv2_to_imgmsg(cannyImg, "8UC1"))
+		yellowDilate = cv2.dilate(self.yellowImg, cv2.getStructuringElement(cv2.MORPH_ELLIPSE,(8,7)))
+		
+		yellowBitwise = cv2.bitwise_and(cannyImg, yellowDilate)
+		whiteBitwise = cv2.bitwise_and(cannyImg, self.whiteImg)
 
-		self.yellow.publish(whiteMarker)
-		self.white.publish(whiteFilter)
-		self.both.publish(allFilter)
+		
+		yellowHough = cv2.HoughLinesP(yellowBitwise, 1, np.pi/180, 5, np.array([]), 5, 5)
+		whiteHough = cv2.HoughLinesP(whiteBitwise, 1, np.pi/180, 10, np.array([]), 10, 250)
+		
+		yellowOut = self.output_lines(cropImg, yellowHough)
+		whiteOut = self.output_lines(cropImg, whiteHough)
+		
+		
+		yellowOutImg = self.bridge.cv2_to_imgmsg(yellowOut, "bgr8")
+		whiteOutImg = self.bridge.cv2_to_imgmsg(whiteOut, "bgr8")
+
+		self.yellow.publish(yellowOutImg)
+		self.white.publish(whiteOutImg)
+		
+	
+
 if __name__ == "__main__":
 	rospy.init_node("node", anonymous=True)
 	node()
