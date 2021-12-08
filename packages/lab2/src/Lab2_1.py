@@ -2,7 +2,7 @@
 
 import rospy
 import time
-from duckietown_msgs import FSMState, Twist2DStamped
+from duckietown_msgs.msg import FSMState, Twist2DStamped
 
 class Node:
 	def __init__(self):
@@ -16,15 +16,15 @@ class Node:
 		self.stopCMD = Twist2DStamped()
 		self.stopCMD.v = 0
 		self.stopCMD.omega = 0
+		self.flag = False
     
-    		self.flag = False
-    
-	def talk(self, msg)
+	def talk(self, msg):
 		startTime = time.time()
-		
+			
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
 			self.flag = True
-	      		for i in range(102): #for 102 ticks, apporximately 3 sec
+			for i in range(102):
+	      		#for 102 ticks, apporximately 3 sec
 				curTIme = time.time()-startTIme
 				rospy.warninfo(f"{curTIme}: move")
 				self.pub.publish(self.moveCMD)
