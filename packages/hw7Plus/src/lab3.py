@@ -9,5 +9,12 @@ from duckietown_msgs.msg import SegmentList
 
 class Node:
 	def __init(self):
+		
+		self.sub = rospy.Subscriber("camera_node/image/compressed", CompressedImage, self.filter, queue_size=1, buff_size=2**24)
+		
 		self.overlay = rospy.Publisher("/img_overlay", Image, queue_size=10)
-        	self.testing = rospy.Publisher("/img_test", Image, queue_size=10)
+		self.test = rospy.Publisher("/img_test", Image, queue_size=10)
+		self.lines = rospy.Publisher("line_detector_node/segment_list", SegmentList, queue_size=10)
+		
+		self.bridge = CvBridge()
+		self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3))
