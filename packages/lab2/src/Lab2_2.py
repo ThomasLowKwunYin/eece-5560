@@ -2,7 +2,7 @@
 
 import rospy
 import time
-from duckietown_msgs import FSMState, Twist2DStamped
+from duckietown_msgs.msg import FSMState, Twist2DStamped
 
 class Node:
 	def __init__(self):
@@ -19,7 +19,7 @@ class Node:
     
     		self.flag = False
     
-	def talk(self, msg)
+	def talk(self, msg):
 		startTime = time.time()
 		
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
