@@ -23,7 +23,7 @@ class Node:
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
 			rospy.logwarn(f"{msg.state}")
 			self.flag = True
-			for i in range(153): 
+			for i in range(153):
 				curTime = time.time()-startTime
 				rospy.logwarn(f"{curTime}: move")
 				self.pub.publish(self.moveCMD)
