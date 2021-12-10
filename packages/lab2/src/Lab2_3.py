@@ -12,8 +12,8 @@ class Node:
 		self.moveCMD = Twist2DStamped()
 		self.moveCMD.v = .41
 		self.moveCMD.omega = 0
-    
-    		self.turnCMD = Twist2DStamped()
+
+		self.turnCMD = Twist2DStamped()
 		self.turnCMD.v = 0
 		self.turnCMD.omega = 2.1
 
