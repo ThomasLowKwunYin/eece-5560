@@ -21,6 +21,7 @@ class Node:
     
 	def talk(self, msg):
 		startTime = time.time()
+		rospy.logwarn(f"{startTime}")
 		rospy.logwarn(f"state:{msg}")
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
 			self.flag = True
