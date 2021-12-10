@@ -23,7 +23,7 @@ class Node:
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
 			rospy.logwarn(f"{msg.state}")
 			self.flag = True
-	      		for i in range(102): #for 102 ticks, apporximately 3 sec
+			for i in range(102): #for 102 ticks, apporximately 3 sec
 				curTime = time.time()-startTIme
 				rospy.logwarn(f"{curTime}: move")
 				self.pub.publish(self.moveCMD)
@@ -34,7 +34,7 @@ class Node:
 			if msg.state != "LANE_FOLLOWING":
 				self.flag = False
 			self.pub.publish(self.stopCMD)
-      
+
 if __name__ == '__main__':
 	rospy.init_node('Lab2_2', anonymous=True)
 	Node()
