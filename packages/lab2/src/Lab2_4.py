@@ -4,7 +4,7 @@ import math
 import rospy
 import numpy as np
 import time
-from duckietown_msgs.msg import WheelsCmdStamped.msg
+from duckietown_msgs.msg import WheelsCmdStamped
 from odometry_hw.msg import  Pose2D
 
 
