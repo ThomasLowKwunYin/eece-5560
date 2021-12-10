@@ -30,6 +30,7 @@ class Node:
 		self.pub_msg.x = self.pub_msg.x + dx
 		self.pub_msg.y = self.pub_msg.y + dy
 		self.pub_msg.theta = self.pub_msg.theta+dTheta
+		rospy.logwarn(f"location:{self.pub_msg}")
 		self.pub.publish(self.pub_msg)
 
 if __name__ == '__main__':
