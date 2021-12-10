@@ -18,7 +18,6 @@ class Node:
 		self.stopCMD.omega = 0
     
     		self.flag = False
-    
 	def talk(self, msg):
 		startTime = time.time()
 		
