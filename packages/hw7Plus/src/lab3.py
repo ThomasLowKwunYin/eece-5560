@@ -9,7 +9,6 @@ from duckietown_msgs.msg import SegmentList
 
 class Node:
 	def __init(self):
-		
 		self.sub = rospy.Subscriber("camera_node/image/compressed", CompressedImage, self.filter, queue_size=1, buff_size=2**24)
 		
 		self.overlay = rospy.Publisher("/img_overlay", Image, queue_size=10)
@@ -18,3 +17,5 @@ class Node:
 		
 		self.bridge = CvBridge()
 		self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3))
+	def filter(self, msg):
+		incomingImg = self.bridge.compressed_imgmsg_to_cv2(msg,"bgr8") 
