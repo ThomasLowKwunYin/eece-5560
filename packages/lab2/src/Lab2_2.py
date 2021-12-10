@@ -20,7 +20,6 @@ class Node:
     		self.flag = False
 	def talk(self, msg):
 		startTime = time.time()
-		
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
 			rospy.logwarn(f"{msg.state}")
 			self.flag = True
@@ -35,7 +34,6 @@ class Node:
 			if msg.state != "LANE_FOLLOWING":
 				self.flag = False
 			self.pub.publish(self.stopCMD)
-				
       
 if __name__ == '__main__':
 	rospy.init_node('Lab2_2', anonymous=True)
