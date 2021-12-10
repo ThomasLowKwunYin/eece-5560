@@ -24,7 +24,7 @@ class Node:
 			rospy.logwarn(f"{msg.state}")
 			self.flag = True
 			for i in range(102): #for 102 ticks, apporximately 3 sec
-				curTime = time.time()-startTIme
+				curTime = time.time()-startTime
 				rospy.logwarn(f"{curTime}: move")
 				self.pub.publish(self.moveCMD)
 			rospy.logwarn(f"{curTime}: stop")
