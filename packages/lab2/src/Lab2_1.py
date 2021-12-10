@@ -17,16 +17,18 @@ class Node:
 		self.stopCMD.v = 0
 		self.stopCMD.omega = 0
 		self.flag = False
+		rospy.warninfo(f"Lab2_1.py ready")
     
 	def talk(self, msg):
 		startTime = time.time()
 		rospy.warninfo(f"state:{msg}")
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
 			self.flag = True
+			rospy.warninfo(f"flag:{self.flag}")
 			for i in range(102):
 	      		#for 102 ticks, apporximately 3 sec
 				curTIme = time.time()-startTIme
-				rospy.warninfo(f"{curTIme}: move")
+				rospy.warninfo(f"{i}: move")
 				self.pub.publish(self.moveCMD)
 			rospy.warninfo(f"{curTIme}: stop")
 			self.pub.publish(self.stopCMD)
