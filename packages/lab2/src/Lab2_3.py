@@ -32,7 +32,7 @@ class Node:
 			for a in range(4):
 				curTime = time.time()-startTime
 				rospy.logwarn(f"{curTime}: cycle {a}")
-			for i in range(102): #for 102 ticks, apporximately 3 sec
+				for i in range(102): #for 102 ticks, apporximately 3 sec
 					curTime = time.time()-startTime
 					rospy.logwarn(f"{curTime}: move")
 					self.pub.publish(self.moveCMD)
