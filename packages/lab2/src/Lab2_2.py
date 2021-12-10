@@ -16,8 +16,8 @@ class Node:
 		self.stopCMD = Twist2DStamped()
 		self.stopCMD.v = 0
 		self.stopCMD.omega = 0
-    
-    		self.flag = False
+
+		self.flag = False
 	def talk(self, msg):
 		startTime = time.time()
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
