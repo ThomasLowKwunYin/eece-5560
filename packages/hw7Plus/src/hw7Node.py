@@ -38,4 +38,56 @@ class node:
 if __name__ == "__main__":
 	rospy.init_node("node", anonymous=True)
 	node()
+	rospy.spin()		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		000000..0...00000000000000
+		0...................................................................000000000000000000000000000000000000000300000000000000000000000000000000000000000000000000000000000000003000000000000000000000000000000000000000003000000
+		
+		self.yellowMask.publish(yellowMask)
+		self.crop.publish(crop)
+    	
+if __name__ == "__main__":
+	rospy.init_node("node", anonymous=True)
+	node()
 	rospy.spin()
