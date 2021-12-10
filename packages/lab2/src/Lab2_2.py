@@ -23,16 +23,16 @@ class Node:
 		startTime = time.time()
 		
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
-			rospy.warninfo(f"{msg.state}")
+			rospy.logwarn(f"{msg.state}")
 			self.flag = True
 	      		for i in range(102): #for 102 ticks, apporximately 3 sec
 				curTime = time.time()-startTIme
-				rospy.warninfo(f"{curTime}: move")
+				rospy.logwarn(f"{curTime}: move")
 				self.pub.publish(self.moveCMD)
-			rospy.warninfo(f"{curTime}: stop")
+			rospy.logwarn(f"{curTime}: stop")
 			self.pub.publish(self.stopCMD)
 		else:
-			rospy.warninfo(f"{msg.state}")
+			rospy.logwarn(f"{msg.state}")
 			if msg.state != "LANE_FOLLOWING":
 				self.flag = False
 			self.pub.publish(self.stopCMD)

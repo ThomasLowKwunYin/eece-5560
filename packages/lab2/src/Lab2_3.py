@@ -27,32 +27,32 @@ class Node:
 		startTime = time.time()
 		
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
-			rospy.warninfo(f"{msg.state}")
+			rospy.logwarn(f"{msg.state}")
 			self.flag = True
 			for a in range(4):
 				curTime = time.time()-startTime
-				rospy.warninfo(f"{curTime}: cycle {a}")
+				rospy.logwarn(f"{curTime}: cycle {a}")
 		      		for i in range(102): #for 102 ticks, apporximately 3 sec
 					curTime = time.time()-startTIme
-					rospy.warninfo(f"{curTime}: move")
+					rospy.logwarn(f"{curTime}: move")
 					self.pub.publish(self.moveCMD)
 				for j in range(10):
 					curTime = time.time()-startTIme
-					rospy.warninfo(f"{curTime}: stop")
+					rospy.logwarn(f"{curTime}: stop")
 					self.pub.publish(self.stopCMD)
 				for k in range(15):
 					curTime = time.time()-startTIme
-					rospy.warninfo(f"{curTime}: turn")
+					rospy.logwarn(f"{curTime}: turn")
 					self.pub.publish(self.turnCMD)
 				for j in range(10):
 					curTime = time.time()-startTIme
-					rospy.warninfo(f"{curTime}: stop")
+					rospy.logwarn(f"{curTime}: stop")
 					self.pub.publish(self.stopCMD)
-				rospy.warninfo(f"{curTime}: stop")
+				rospy.logwarn(f"{curTime}: stop")
 			curTime = time.time()-startTIme
-			rospy.warninfo(f"{curTime}: end")
+			rospy.logwarn(f"{curTime}: end")
 		else:
-			rospy.warninfo(f"{msg.state}")
+			rospy.logwarn(f"{msg.state}")
 			if msg.state != "LANE_FOLLOWING":
 				self.flag = False
 			self.pub.publish(self.stopCMD)
