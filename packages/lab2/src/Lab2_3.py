@@ -6,8 +6,8 @@ from duckietown_msgs.msg import FSMState, Twist2DStamped
 
 class Node:
 	def __init__(self):
-		rospy.Subscriber('fsm_node/node', FSMState, self.talk)
-		self.pub = rospy.Publisher('car_cmd_switch_node/car_cmd', Twist2DStamped, queue_size=10)
+		rospy.Subscriber('fsm_node/mode', FSMState, self.talk)
+		self.pub = rospy.Publisher('car_cmd_switch_node/cmd', Twist2DStamped, queue_size=10)
     
 		self.moveCMD = Twist2DStamped()
 		self.moveCMD.v = .41
