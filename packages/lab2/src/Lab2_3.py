@@ -33,23 +33,23 @@ class Node:
 				curTime = time.time()-startTime
 				rospy.logwarn(f"{curTime}: cycle {a}")
 		      		for i in range(102): #for 102 ticks, apporximately 3 sec
-					curTime = time.time()-startTIme
+					curTime = time.time()-startTime
 					rospy.logwarn(f"{curTime}: move")
 					self.pub.publish(self.moveCMD)
 				for j in range(10):
-					curTime = time.time()-startTIme
+					curTime = time.time()-startTime
 					rospy.logwarn(f"{curTime}: stop")
 					self.pub.publish(self.stopCMD)
 				for k in range(15):
-					curTime = time.time()-startTIme
+					curTime = time.time()-startTime
 					rospy.logwarn(f"{curTime}: turn")
 					self.pub.publish(self.turnCMD)
 				for j in range(10):
-					curTime = time.time()-startTIme
+					curTime = time.time()-startTime
 					rospy.logwarn(f"{curTime}: stop")
 					self.pub.publish(self.stopCMD)
 				rospy.logwarn(f"{curTime}: stop")
-			curTime = time.time()-startTIme
+			curTime = time.time()-startTime
 			rospy.logwarn(f"{curTime}: end")
 		else:
 			rospy.logwarn(f"{msg.state}")

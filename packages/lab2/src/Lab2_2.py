@@ -11,7 +11,7 @@ class Node:
     
 		self.moveCMD = Twist2DStamped()
 		self.moveCMD.v = .41
-		self.moveCMD.omega = 2.1
+		self.moveCMD.omega = 1
 
 		self.stopCMD = Twist2DStamped()
 		self.stopCMD.v = 0
@@ -23,7 +23,7 @@ class Node:
 		if msg.state == "LANE_FOLLOWING" and self.flag == False:
 			rospy.logwarn(f"{msg.state}")
 			self.flag = True
-			for i in range(102): #for 102 ticks, apporximately 3 sec
+			for i in range(306): #for 102 ticks, apporximately 3 sec
 				curTime = time.time()-startTime
 				rospy.logwarn(f"{curTime}: move")
 				self.pub.publish(self.moveCMD)
