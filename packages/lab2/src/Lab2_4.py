@@ -23,8 +23,8 @@ class Node:
 		curTime = time.time()-self.startTime
 		leftWheelPos = msg.vel_left*curTime
 		rightWheelPos = msg.vel_right*curTime
-		ds = (msg.dist_wheel_left + msg.dist_wheel_right)/2		
-		dTheta=(msg.dist_wheel_right-msg.dist_wheel_left)/0.1
+		ds = (leftWheelPos + rightWheelPos)/2		
+		dTheta=(rightWheelPos-leftWheelPos)/0.1
 		dx =ds*math.cos(self.pub_msg.theta+dTheta/2)
 		dy =ds*math.sin  (self.pub_msg.theta+dTheta/2)
 		self.pub_msg.x = self.pub_msg.x + dx
