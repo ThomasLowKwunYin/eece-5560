@@ -14,8 +14,8 @@ class Node:
 		self.pub_msg.x = 0
 		self.pub_msg.y = 0
 		self.pub_msg.theta = 0
-		rospy.Subscriber('/wheels_driver_node/wheels_cmd', WheelsCmd, self.talk)
-		self.pub = rospy.Publisher('/pose', Pose2D, queue_size=10)
+		rospy.Subscriber('wheels_driver_node/wheels_cmd', WheelsCmdStamped, self.talk)
+		self.pub = rospy.Publisher('pose', Pose2D, queue_size=10)
 		self.startTime = time.time()
 
 	
