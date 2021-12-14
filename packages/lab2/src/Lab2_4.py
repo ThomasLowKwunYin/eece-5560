@@ -21,7 +21,6 @@ class Node:
 	
 	def talk(self,msg):
 		curTime = time.time()-self.startTime
-		#self.startTime = curTime
 		leftWheelPos = msg.vel_left*curTime
 		rightWheelPos = msg.vel_right*curTime
 		ds = (leftWheelPos + rightWheelPos)/2		
@@ -33,7 +32,6 @@ class Node:
 		self.pub_msg.theta = self.pub_msg.theta+dTheta
 		rospy.logwarn(f"location:{self.pub_msg}")
 		self.pub.publish(self.pub_msg)
-		
 
 if __name__ == '__main__':
 	rospy.init_node('Lab2_4', anonymous=True)
