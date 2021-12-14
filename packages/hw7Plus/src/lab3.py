@@ -18,10 +18,12 @@ class Node:
 		self.bridge = CvBridge()
 		self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3))
 	def filter(self, msg):
-		incomingImg = self.bridge.compressed_imgmsg_to_cv2(msg,"bgr8") 
+		segment = Segment()
+		segmentList = SegmentList()
+		incomingImg = self.bridge.compressed_imgmsg_to_cv2(msg,"bgr8")
 		
 		imgSize  = (160, 120)
 		offset = 40
 		imgResized = cv2.resize(cv_img, imgSize, interpolation=cv2.INTER_NEAREST)
 		cropped = resized_img[offset:,:] 
-		
+		hsvImg = cv2.cvtColor(cropped, cv2.COLOR_BGR2HSV)
