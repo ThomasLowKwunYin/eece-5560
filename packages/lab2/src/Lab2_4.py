@@ -32,6 +32,7 @@ class Node:
 		self.pub_msg.theta = self.pub_msg.theta+dTheta
 		rospy.logwarn(f"location:{self.pub_msg}")
 		self.pub.publish(self.pub_msg)
+		self.startTime= curTime
 
 if __name__ == '__main__':
 	rospy.init_node('Lab2_4', anonymous=True)
