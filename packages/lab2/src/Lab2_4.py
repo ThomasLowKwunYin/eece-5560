@@ -21,7 +21,7 @@ class Node:
 	
 	def talk(self,msg):
 		curTime = time.time()-self.startTime
-		#self.startTime = curTime
+		self.startTime = curTime
 		leftWheelPos = msg.vel_left*curTime
 		rightWheelPos = msg.vel_right*curTime
 		ds = (leftWheelPos + rightWheelPos)/2		
