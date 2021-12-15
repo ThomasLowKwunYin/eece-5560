@@ -45,12 +45,54 @@ class Node:
 		yellow = cv2.bitwise_and(cropped_image, cropped_image, mask=yellow)
 		
 		#crop, canny edge detection and extra dilate
-		self.cropped_edges = cv2.Canny(cropped, 10, 255)
+		self.croppedEdges = cv2.Canny(cropped, 10, 255)
 		white = cv2.dilate(white,self.kernel)
-		self.white_edges = np.array(white)
+		self.whiteEdges = np.array(white)
 		yellow = cv2.dilate(yellow,self.kernel)
-		self.yellow_edges = np.array(yellow)
+		self.yellowEdges = np.array(yellow)
+
+		#overlay
+		whiteOverlay  = cv2.bitwise_and(self.whiteEdges,  self.whiteEdges,  mask=self.cropped_edges)
+		yellowOverlay = cv2.bitwise_and(self.yellowEdges, self.yellowEdges, mask=self.cropped_edges)
+		
+		#edge to rgb
+		Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
+		Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
+		
+		#rgb to grey
+		whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
+		yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
+		
+		#Hough Transform
+		whiteHough  = cv2.HoughLinesP(whiteGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
+        	yellowHough = cv2.HoughLinesP(yellowGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
+		
+		arr_cutoff = np.array([0, offset, 0, offset])
+		arr_ratio  = np.array([1. / image_size[0], 1. / image_size[1], 1. / image_size[0], 1. / image_size[1]])
 	
+		if white_lines is not None:
+            		line_normalized_white =  (whiteHough  + arr_cutoff) * arr_ratio
+			for line in line_normalized_white:
+				for x1,y1,x2,y2 in line:
+					segment.color = 0		# Segment is a White line
+					segment.pixels_normalized[0].x = x1
+					segment.pixels_normalized[0].y = y1
+					segment.pixels_normalized[1].x = x2
+					segment.pixels_normalized[1].y = y2
+					rospy.loginfo(segmentList)
+					segmentList.segments.append(segment)
+		if yellow_lines is not None:
+			line_normalized_yellow = (yellowHough + arr_cutoff) * arr_ratio
+			for line in line_normalized_yellow:
+				for x1,y1,x2,y2 in line:
+				    segment.color = 1		# Segment is a White line
+				    segment.pixels_normalized[0].x = line_normalized_yellow[0]
+				    segment.pixels_normalized[0].y = line_normalized_yellow[1]
+				    segment.pixels_normalized[1].x = line_normalized_yellow[2]
+				    segment.pixels_normalized[1].y = line_normalized_yellow[3]
+				    segmentList.segments.append(segment)
+		
+		
 	def output_lines(self, original_image, lines):
 		output = np.copy(original_image)
 		if lines is not None:
