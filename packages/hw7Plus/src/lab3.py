@@ -60,4 +60,8 @@ class Node:
 				cv2.circle(output, (l[0],l[1]), 2, (0,255,0))
 				cv2.circle(output, (l[2],l[3]), 2, (0,0,255))
 		return output
-		
+
+if __name__ == "__main__":
+	rospy.init_node("node", anonymous=True)
+	Node()
+	rospy.spin()
