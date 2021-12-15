@@ -27,19 +27,22 @@ class Node:
 		
 		image_Size  = (160, 120)
 		offset = 40
-		new_image = cv2.resize(cv_img, imgSize, interpolation=cv2.INTER_NEAREST)
+		new_image = cv2.resize(cv_img, image_Size, interpolation=cv2.INTER_NEAREST)
 		cropped_image = new_image[offset:,:] 
-		hsvImg = cv2.cvtColor(cropped, cv2.COLOR_BGR2HSV)
-		# mask
+		hsvImg = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2HSV)
+		#mask
 		white  = cv2.inRange(hsvImg, (0,0,180),(255,40,255))		
 		yellow = cv2.inRange(hsvImg, (25,70,150),(40,255,255))
+		#erode
+		white  = cv2.erode(white,self.kernel)
+		yellow = cv2.erode(yellow,self.kernel)
+		#dilate
+		white  = cv2.dilate(white,self.kernel)
+		yellow = cv2.dilate(yellow,self.kernel)
 		
-		white  = cv2.erode(white,self.kernel)				# erode
-		
-		white  = cv2.dilate(white,self.kernel)			# dilate
-		white  = cv2.bitwise_and(cropped, cropped, mask=white)	# crop image with white only
-		
-			# Yellow Mask
-		yellow = cv2.erode(yellow,self.kernel)			# Eroded white mask
-		yellow = cv2.dilate(yellow,self.kernel)			# Dilated white mask
+		#color only
+		white  = cv2.bitwise_and(cropped, cropped, mask=white)		
 		yellow = cv2.bitwise_and(cropped, cropped, mask=yellow)
+		
+		#crop, canny edge detection and extra dilate
+		
