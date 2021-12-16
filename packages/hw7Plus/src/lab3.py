@@ -98,7 +98,12 @@ class Node:
 		whiteOut = self.output_lines_white(cropped_image, whiteHough)
 		whiteYellowOut = self.output_lines_both(whiteOut, yellowHough)
 		
+		#convert to ros img then pub
+		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
 		
+		#test output
+		rosTested = self.bridge.cv2_to_imgmsg(whiteOverlay,"bgr8")
+		self.testing.publish(whiteOverlay)
 
 	def output_lines_white(self, original_image, lines):
 		output = np.copy(original_image)
