@@ -65,8 +65,7 @@ class Node:
 		
 		#Hough Transform
 		whiteHough  = cv2.HoughLinesP(whiteGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
-        	yellowHough = cv2.HoughLinesP(yellowGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
-		
+		yellowHough = cv2.HoughLinesP(yellowGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
 		arr_cutoff = np.array([0, offset, 0, offset])
 		arr_ratio  = np.array([1. / image_Size[0], 1. / image_Size[1], 1. / image_Size[0], 1. / image_Size[1]])
 		
