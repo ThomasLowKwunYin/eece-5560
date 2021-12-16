@@ -96,7 +96,7 @@ class Node:
 		self.line.publish(segmentList)
 		#stackingImg
 		whiteOut = self.output_lines_white(cropped_image, whiteHough)
-		yellowOut = self.output_lines_yellow(cropped_image, yellowHough)
+		whiteYellowOut = self.output_lines_both(whiteOut, yellowHough)
 		
 		
 
@@ -109,7 +109,7 @@ class Node:
 				cv2.circle(output, (l[0],l[1]), 2, (0,255,0))
 				cv2.circle(output, (l[2],l[3]), 2, (0,0,255))
 		return output
-	def output_lines_yellow(self, original_image, lines):
+	def output_lines_both(self, original_image, lines):
 		output = np.copy(original_image)
 		if lines is not None:
 	    		for i in range(len(lines)):
