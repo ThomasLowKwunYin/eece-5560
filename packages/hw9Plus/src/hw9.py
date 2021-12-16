@@ -2,29 +2,32 @@
 
 import rospy
 from std_msgs.msg import Float32
-import PIDControllerClass as PID
 
 class node:
 	def __init__(self):
-	
-		= rospy.Subscriber("/error", Float32, self.control)
+		rospy.Subscriber("/error", Float32, self.talk)
 		self.pub = rospy.Publisher("/control_input", Float32, queue_size=10)
-		
+
 		rospy.set_param("controller_ready", "true") 
-        	rospy.set_param("graph_ready", "true") 
-        	
-        	kp = 0
-        	ki = 0
-        	kd = 0
-        	
-        	self.K = [kp, ki, kd]
+		rospy.set_param("graph_ready", "true") 
+
+		self.kp = .15
+		self.ki = 0
+		self.kd = .475
+		self.error = 0
+		self.prevError = 0
+		self.errorDelta = 0
 		self.dt = 0.01
-		self.PIDClass = PID.PID(self.K, self.dt)
-		
-	def control(self, error):
-		rospy.loginfo(error.data)
-		sumPID = self.PIDClass.run(error.data)
-		self.pub.publish(sumPID)
+		self.timeInit = rospy.get_time()
+	def talk(self, msg):
+		rospy.loginfo(msg.data)
+		time = rospy.get_time()
+		self.error += msg.data*(time-self.timeInit)
+		self.errorDelta = (self.error-self.prevError)/(time-self.timeInit)
+		self.timeInit = time
+		self.prevError = msg
+		output = self.kp*msg.daga+self.ki*self.error+self.kd*self.errorDelta
+		self.pub.publish(output)
 		
 if __name__ == "__main__":
 	rospy.init_node("hw9", anonymous=True)
