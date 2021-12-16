@@ -1,0 +1,4 @@
+<launch>
+  <include file="$(find controls_hw)/launch/start_dynamics.launch"/>
+  <node pkg="lab4" name="hw9" type="hw9.py"/> 
+</launch>
