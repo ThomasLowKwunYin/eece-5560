@@ -45,7 +45,7 @@ class Node:
 		yellow = cv2.bitwise_and(cropped_image, cropped_image, mask=yellow)
 		
 		#crop, canny edge detection and extra dilate
-		croppedEdges = cv2.Canny(cropped, 10, 255)
+		croppedEdges = cv2.Canny(cropped_image, 10, 255)
 		white = cv2.dilate(white,self.kernel)
 		whiteEdges = np.array(white)
 		yellow = cv2.dilate(yellow,self.kernel)
