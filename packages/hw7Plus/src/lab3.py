@@ -8,7 +8,7 @@ from cv_bridge import CvBridge
 from duckietown_msgs.msg import SegmentList
 
 class Node:
-	def __init(self):
+	def __init__(self):
 		self.sub = rospy.Subscriber("camera_node/image/compressed", CompressedImage, self.talk, queue_size=1, buff_size=2**24)
 		
 		self.overlay = rospy.Publisher("/img_overlay", Image, queue_size=10)
