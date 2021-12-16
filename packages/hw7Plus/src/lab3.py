@@ -5,7 +5,7 @@ import cv2
 import numpy as np
 from sensor_msgs.msg import Image, CompressedImage
 from cv_bridge import CvBridge
-from duckietown_msgs.msg import SegmentList
+from duckietown_msgs.msg import SegmentList, Segment
 
 class Node:
 	def __init__(self):
