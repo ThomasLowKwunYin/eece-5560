@@ -27,7 +27,7 @@ class Node:
 		
 		image_Size  = (160, 120)
 		offset = 40
-		new_image = cv2.resize(cv_img, image_Size, interpolation=cv2.INTER_NEAREST)
+		new_image = cv2.resize(incomingImg, image_Size, interpolation=cv2.INTER_NEAREST)
 		cropped_image = new_image[offset:,:] 
 		hsvImg = cv2.cvtColor(cropped_image, cv2.COLOR_BGR2HSV)
 		#mask
