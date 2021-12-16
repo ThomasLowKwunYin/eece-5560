@@ -92,7 +92,7 @@ class Node:
 					segment.pixels_normalized[1].y = yellowNormalized[3]
 					segmentList.segments.append(segment)
 					
-		self.line.publish(segmentList)
+		self.lines.publish(segmentList)
 		#stackingImg
 		whiteOut = self.output_lines_white(cropped_image, whiteHough)
 		whiteYellowOut = self.output_lines_both(whiteOut, yellowHough)
