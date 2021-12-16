@@ -45,11 +45,11 @@ class Node:
 		yellow = cv2.bitwise_and(cropped_image, cropped_image, mask=yellow)
 		
 		#crop, canny edge detection and extra dilate
-		self.croppedEdges = cv2.Canny(cropped, 10, 255)
+		croppedEdges = cv2.Canny(cropped, 10, 255)
 		white = cv2.dilate(white,self.kernel)
-		self.whiteEdges = np.array(white)
+		whiteEdges = np.array(white)
 		yellow = cv2.dilate(yellow,self.kernel)
-		self.yellowEdges = np.array(yellow)
+		yellowEdges = np.array(yellow)
 
 		#overlay
 		whiteOverlay  = cv2.bitwise_and(self.whiteEdges,  self.whiteEdges,  mask=self.cropped_edges)
@@ -68,31 +68,37 @@ class Node:
         	yellowHough = cv2.HoughLinesP(yellowGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
 		
 		arr_cutoff = np.array([0, offset, 0, offset])
-		arr_ratio  = np.array([1. / image_size[0], 1. / image_size[1], 1. / image_size[0], 1. / image_size[1]])
-	
-		if white_lines is not None:
-            		line_normalized_white =  (whiteHough  + arr_cutoff) * arr_ratio
-			for line in line_normalized_white:
+		arr_ratio  = np.array([1. / image_Size[0], 1. / image_Size[1], 1. / image_Size[0], 1. / image_Size[1]])
+		
+		#Normalize and create segment
+		if whiteHough is not None:
+            		whiteNormalized =  (whiteHough  + arr_cutoff) * arr_ratio
+			for line in whiteNormalized:
 				for x1,y1,x2,y2 in line:
-					segment.color = 0		# Segment is a White line
-					segment.pixels_normalized[0].x = x1
-					segment.pixels_normalized[0].y = y1
-					segment.pixels_normalized[1].x = x2
-					segment.pixels_normalized[1].y = y2
-					rospy.loginfo(segmentList)
+					segment.color = 0
+					segment.pixels_normalized[0].x = whiteNormalized[0]
+					segment.pixels_normalized[0].y = whiteNormalized[1]
+					segment.pixels_normalized[1].x = whiteNormalized[2]
+					segment.pixels_normalized[1].y = whiteNormalized[3]
 					segmentList.segments.append(segment)
-		if yellow_lines is not None:
-			line_normalized_yellow = (yellowHough + arr_cutoff) * arr_ratio
-			for line in line_normalized_yellow:
+					
+		if yellowHough is not None:
+			yellowNormalized = (yellowHough + arr_cutoff) * arr_ratio
+			for line in yellowNormalized:
 				for x1,y1,x2,y2 in line:
-				    segment.color = 1		# Segment is a White line
-				    segment.pixels_normalized[0].x = line_normalized_yellow[0]
-				    segment.pixels_normalized[0].y = line_normalized_yellow[1]
-				    segment.pixels_normalized[1].x = line_normalized_yellow[2]
-				    segment.pixels_normalized[1].y = line_normalized_yellow[3]
-				    segmentList.segments.append(segment)
+					segment.color = 1
+					segment.pixels_normalized[0].x = yellowNormalized[0]
+					segment.pixels_normalized[0].y = yellowNormalized[1]
+					segment.pixels_normalized[1].x = yellowNormalized[2]
+					segment.pixels_normalized[1].y = yellowNormalized[3]
+					segmentList.segments.append(segment)
+					
+		self.line.publish(segmentList)
+		#stackingImg
+		whiteOut = self.output_lines(cropped_image, whiteHough)
+		yellowOut = self.output_lines(cropped_image, yellowHough)
 		
-		
+
 	def output_lines(self, original_image, lines):
 		output = np.copy(original_image)
 		if lines is not None:
@@ -102,6 +108,7 @@ class Node:
 				cv2.circle(output, (l[0],l[1]), 2, (0,255,0))
 				cv2.circle(output, (l[2],l[3]), 2, (0,0,255))
 		return output
+	
 
 if __name__ == "__main__":
 	rospy.init_node("node", anonymous=True)
