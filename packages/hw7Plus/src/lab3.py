@@ -52,8 +52,8 @@ class Node:
 		yellowEdges = np.array(yellow)
 
 		#overlay
-		whiteOverlay  = cv2.bitwise_and(whiteEdges,  whiteEdges,  mask=self.croppedEdges)
-		yellowOverlay = cv2.bitwise_and(yellowEdges, yellowEdges, mask=self.croppedEdges)
+		whiteOverlay  = cv2.bitwise_and(whiteEdges,  whiteEdges,  mask = croppedEdges)
+		yellowOverlay = cv2.bitwise_and(yellowEdges, yellowEdges, mask = croppedEdges)
 		
 		#edge to rgb
 		Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
