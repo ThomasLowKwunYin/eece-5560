@@ -11,9 +11,9 @@ class node:
 		rospy.set_param("controller_ready", "true") 
 		rospy.set_param("graph_ready", "true") 
 
-		self.kp = 0.475
-		self.ki = 0.00005
-		self.kd = 0.085
+		self.kp = 0.47
+		self.ki = 0
+		self.kd = 0
 		self.error = 0
 		self.prevError = 0
 		self.errorDelta = 0
@@ -21,7 +21,6 @@ class node:
 		self.timeInit = rospy.get_time()
 	def talk(self, msg):
 		rospy.logwarn(msg.data)
-		
 		time = rospy.get_time()
 		self.error += msg.data*(time-self.timeInit)
 		self.errorDelta = (self.error-self.prevError)/(time-self.timeInit)
