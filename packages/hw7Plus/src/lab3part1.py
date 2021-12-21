@@ -102,7 +102,7 @@ class ImageFilter:
         # Testing output
         test = white_edges			# Change this to test an image
         ros_tested_img = self.bridge.cv2_to_imgmsg(test,"bgr8")
-        self.testing.publish(ros_tested_img)
+        self.test.publish(ros_tested_img)
         
                 
     def output_lines_white(self, original_image, lines):
