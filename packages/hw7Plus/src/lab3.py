@@ -75,10 +75,10 @@ class Node:
 			for line in whiteNormalized:
 				for x1,y1,x2,y2 in line:
 					segment.color = 0
-					segment.pixels_normalized[0].x = line[0]
-					segment.pixels_normalized[0].y = line[1]
-					segment.pixels_normalized[1].x = line[2]
-					segment.pixels_normalized[1].y = line[3]
+					segment.pixels_normalized[0].x = x1
+					segment.pixels_normalized[0].y = y1
+					segment.pixels_normalized[1].x = x2
+					segment.pixels_normalized[1].y = y2
 					segmentList.segments.append(segment)
 					
 		if yellowHough is not None:
@@ -86,10 +86,10 @@ class Node:
 			for line in yellowNormalized:
 				for x1,y1,x2,y2 in line:
 					segment.color = 1
-					segment.pixels_normalized[0].x = line[0]
-					segment.pixels_normalized[0].y = line[1]
-					segment.pixels_normalized[1].x = line[2]
-					segment.pixels_normalized[1].y = line[3]
+					segment.pixels_normalized[0].x = yellowNormalized[0]
+					segment.pixels_normalized[0].y = yellowNormalized[1]
+					segment.pixels_normalized[1].x = yellowNormalized[2]
+					segment.pixels_normalized[1].y = yellowNormalized[3]
 					segmentList.segments.append(segment)
 					
 		self.lines.publish(segmentList)
