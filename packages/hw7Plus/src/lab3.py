@@ -102,7 +102,7 @@ class Node:
 		
 		#test output
 		rosTested = self.bridge.cv2_to_imgmsg(whiteOverlay,"mono8")
-		self.testing.publish(whiteOverlay)
+		self.test.publish(whiteOverlay)
 
 	def output_lines_white(self, original_image, lines):
 		output = np.copy(original_image)
