@@ -56,12 +56,12 @@ class Node:
 		yellowOverlay = cv2.bitwise_and(yellowEdges, yellowEdges, mask = croppedEdges)
 		
 		#edge to rgb
-		#Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
-		#Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
+		Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
+		Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
 		
 		#rgb to grey
-		#whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
-		#yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
+		whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
+		yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
 		
 		#Hough Transform
 		whiteHough  = cv2.HoughLinesP(whiteOverlay, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
@@ -101,8 +101,8 @@ class Node:
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
 		
 		#test output
-		rosTested = self.bridge.cv2_to_imgmsg(whiteOverlay,"mono8")
-		self.test.publish(whiteOverlay)
+		rosTested = self.bridge.cv2_to_imgmsg(whiteOverlay,"bgr8")
+		self.testing.publish(whiteOverlay)
 
 	def output_lines_white(self, original_image, lines):
 		output = np.copy(original_image)
