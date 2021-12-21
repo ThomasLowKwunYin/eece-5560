@@ -15,10 +15,10 @@ class Lab3Part1Node():
 
     def __init__(self):
         self.bridge = CvBridge()
-        rospy.Subscriber("/ritzquacker/camera_node/image/compressed", CompressedImage, self.callback, queue_size=1, buff_size=2**24)
+        rospy.Subscriber("/camera_node/image/compressed", CompressedImage, self.callback, queue_size=1, buff_size=2**24)
         self.pub = rospy.Publisher ("/part1", Image, queue_size=10)
         #self.pub_test = rospy.Publisher ("/test", Image, queue_size=10)
-        self.pub_part2 = rospy.Publisher ("/ritzquacker/line_detector_node/segment_list", SegmentList, queue_size=10)
+        self.pub_part2 = rospy.Publisher ("/line_detector_node/segment_list", SegmentList, queue_size=10)
 
     def output_lines(self, original_image, lines):
         output = np.copy(original_image)
