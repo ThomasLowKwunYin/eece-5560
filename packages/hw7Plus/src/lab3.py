@@ -98,6 +98,8 @@ class Node:
 		#convert to ros img then pub
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
 		
+		if len(segmentList.segments) != 0:
+			self.lineSegments.publish(segmentList)
 
 	def output_lines_white(self, original_image, lines):
 		output = np.copy(original_image)
