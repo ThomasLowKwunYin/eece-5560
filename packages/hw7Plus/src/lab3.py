@@ -99,7 +99,7 @@ class Node:
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
 		
 		if len(segmentList.segments) != 0:
-			self.lineSegments.publish(segmentList)
+			self.lines.publish(segmentList)
 
 	def output_lines_white(self, original_image, lines):
 		output = np.copy(original_image)
