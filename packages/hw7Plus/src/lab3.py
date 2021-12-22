@@ -12,7 +12,6 @@ class Node:
 		self.sub = rospy.Subscriber("camera_node/image/compressed", CompressedImage, self.talk, queue_size=1, buff_size=2**24)
 		
 		self.overlay = rospy.Publisher("/img_overlay", Image, queue_size=10)
-		self.test = rospy.Publisher("/img_test", Image, queue_size=10)
 		self.lines = rospy.Publisher("line_detector_node/segment_list", SegmentList, queue_size=10)
 		
 		self.bridge = CvBridge()
@@ -100,10 +99,6 @@ class Node:
 		#convert to ros img then pub
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
 		
-		#test output
-		testingUnit = whiteOverlay
-		rosTested = self.bridge.cv2_to_imgmsg(testingUnit,"mono8")
-		self.test.publish(rosTested)
 
 	def output_lines_white(self, original_image, lines):
 		output = np.copy(original_image)

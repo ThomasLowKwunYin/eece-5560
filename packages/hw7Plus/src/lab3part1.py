@@ -12,7 +12,7 @@ from duckietown_msgs.msg import SegmentList, Segment
 class ImageFilter:
     def __init__(self):
         self.overlay = rospy.Publisher("/lab3_img_overlay", Image, queue_size=10)
-        self.testing = rospy.Publisher("/img_test", Image, queue_size=10)
+        #self.testing = rospy.Publisher("/img_test", Image, queue_size=10)
         self.lineSegments = rospy.Publisher("line_detector_node/segment_list", SegmentList, queue_size=10)
         self.bridge = CvBridge()
         self.kernel = cv2.getStructuringElement(cv2.MORPH_ELLIPSE, (3,3))		# Kernel
@@ -62,35 +62,34 @@ class ImageFilter:
         arr_ratio  = np.array([1. / image_size[0], 1. / image_size[1], 1. / image_size[0], 1. / image_size[1]])
         white_lines  = cv2.HoughLinesP(grey_w, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
         yellow_lines = cv2.HoughLinesP(grey_y, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
-        #rospy.loginfo(white_lines)
         
         # Normalize and create segment lists
         if white_lines is not None:
             line_normalized_white =  (white_lines  + arr_cutoff) * arr_ratio
+            #rospy.loginfo("l_n_w: " + str(line_normalized_white))
             for line in line_normalized_white:
-                for x1,y1,x2,y2 in line:
-                    segment.color = 0		# Segment is a White line
-                    segment.pixels_normalized[0].x = x1
-                    segment.pixels_normalized[0].y = y1
-                    segment.pixels_normalized[1].x = x2
-                    segment.pixels_normalized[1].y = y2
-                    rospy.loginfo(segmentList)
-                    segmentList.segments.append(segment)
+                segment = Segment()
+                #rospy.loginfo("l: " + str(line))
+                segment.color = 0		# Segment is a White line
+                #rospy.loginfo("l_n_w[k]: " + str(line))
+                segment.pixels_normalized[0].x = line[0][0]
+                segment.pixels_normalized[0].y = line[0][1]
+                segment.pixels_normalized[1].x = line[0][2]
+                segment.pixels_normalized[1].y = line[0][3]
+                segmentList.segments.append(segment)
+                #rospy.loginfo("segment: " + str(segment))
+        #rospy.loginfo("SList: " + str(segmentList))
         if yellow_lines is not None:
             line_normalized_yellow = (yellow_lines + arr_cutoff) * arr_ratio
             for line in line_normalized_yellow:
-                for x1,y1,x2,y2 in line:
-                    segment.color = 1		# Segment is a White line
-                    segment.pixels_normalized[0].x = line_normalized_yellow[0]
-                    segment.pixels_normalized[0].y = line_normalized_yellow[1]
-                    segment.pixels_normalized[1].x = line_normalized_yellow[2]
-                    segment.pixels_normalized[1].y = line_normalized_yellow[3]
-                    segmentList.segments.append(segment)
+                segment = Segment()
+                segment.color = 1		# Segment is a White line
+                segment.pixels_normalized[0].x = line[0][0]
+                segment.pixels_normalized[0].y = line[0][1]
+                segment.pixels_normalized[1].x = line[0][2]
+                segment.pixels_normalized[1].y = line[0][3]
+                segmentList.segments.append(segment)
                     
-        
-        # Publish lines to segment_list
-        self.lineSegments.publish(segmentList)
-            
         # Draws lines over cropped image
         white_line_img = self.output_lines_white(cropped, white_lines)
         both_lines_img = self.output_lines_yellow(white_line_img, yellow_lines)
@@ -100,10 +99,13 @@ class ImageFilter:
         self.overlay.publish(ROS_lines_B)
         
         # Testing output
-        testing = white_edges			# Change this to test an image
-        ros_tested_img = self.bridge.cv2_to_imgmsg(testing,"bgr8")
-        self.testing.publish(ros_tested_img)
+        #test = white_edges			# Change this to test an image
+        #ros_tested_img = self.bridge.cv2_to_imgmsg(test,"bgr8")
+        #self.testing.publish(ros_tested_img)
         
+        # Publish lines to segment_list
+        if len(segmentList.segments) != 0:
+            self.lineSegments.publish(segmentList)
                 
     def output_lines_white(self, original_image, lines):
         output = np.copy(original_image)
