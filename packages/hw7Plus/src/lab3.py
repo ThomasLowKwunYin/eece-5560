@@ -40,8 +40,8 @@ class Node:
 		yellow = cv2.dilate(yellow,self.kernel)
 		
 		#color only
-		#white  = cv2.bitwise_and(cropped_image, cropped_image, mask=white)		
-		#yellow = cv2.bitwise_and(cropped_image, cropped_image, mask=yellow)
+		white  = cv2.bitwise_and(cropped_image, cropped_image, mask=white)		
+		yellow = cv2.bitwise_and(cropped_image, cropped_image, mask=yellow)
 		
 		#crop, canny edge detection and extra dilate
 		croppedEdges = cv2.Canny(cropped_image, 10, 255)
@@ -55,41 +55,41 @@ class Node:
 		yellowOverlay = cv2.bitwise_and(yellowEdges, yellowEdges, mask = croppedEdges)
 		
 		#edge to rgb
-		#Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
-		#Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
+		Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
+		Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
 		
 		#rgb to grey
-		#whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
-		#yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
+		whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
+		yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
 		
 		#Hough Transform
-		whiteHough  = cv2.HoughLinesP(whiteOverlay, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
-		yellowHough = cv2.HoughLinesP(yellowOverlay, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
 		arr_cutoff = np.array([0, offset, 0, offset])
 		arr_ratio  = np.array([1. / image_Size[0], 1. / image_Size[1], 1. / image_Size[0], 1. / image_Size[1]])
+		
+		
+		whiteHough  = cv2.HoughLinesP(whiteGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
+		yellowHough = cv2.HoughLinesP(yellowGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
 		
 		#Normalize and create segment
 		if whiteHough is not None:
 			whiteNormalized =  (whiteHough  + arr_cutoff) * arr_ratio
-			for line in whiteNormalized:
-				for x1,y1,x2,y2 in line:
-					segment.color = 0
-					segment.pixels_normalized[0].x = x1
-					segment.pixels_normalized[0].y = y1
-					segment.pixels_normalized[1].x = x2
-					segment.pixels_normalized[1].y = y2
-					segmentList.segments.append(segment)
+		for line in whiteNormalized:
+				segment.color = 0
+				segment.pixels_normalized[0].x = x1
+				segment.pixels_normalized[0].y = y1
+				segment.pixels_normalized[1].x = x2
+				segment.pixels_normalized[1].y = y2
+				segmentList.segments.append(segment)
 					
 		if yellowHough is not None:
 			yellowNormalized = (yellowHough + arr_cutoff) * arr_ratio
 			for line in yellowNormalized:
-				for x1,y1,x2,y2 in line:
-					segment.color = 1
-					segment.pixels_normalized[0].x = yellowNormalized[0]
-					segment.pixels_normalized[0].y = yellowNormalized[1]
-					segment.pixels_normalized[1].x = yellowNormalized[2]
-					segment.pixels_normalized[1].y = yellowNormalized[3]
-					segmentList.segments.append(segment)
+				segment.color = 1
+				segment.pixels_normalized[0].x = yellowNormalized[0]
+				segment.pixels_normalized[0].y = yellowNormalized[1]
+				segment.pixels_normalized[1].x = yellowNormalized[2]
+				segment.pixels_normalized[1].y = yellowNormalized[3]
+				segmentList.segments.append(segment)
 					
 		self.lines.publish(segmentList)
 		#stackingImg
@@ -98,6 +98,8 @@ class Node:
 		
 		#convert to ros img then pub
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
+	
+	def normalize(self, 
 		
 
 	def output_lines_white(self, original_image, lines):
