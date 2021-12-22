@@ -73,7 +73,7 @@ class Node:
 		#Normalize and create segment
 		if whiteHough is not None:
 			whiteNormalized =  (whiteHough  + arr_cutoff) * arr_ratio
-		for line in whiteNormalized:
+			for line in whiteNormalized:
 				segment.color = 0
 				segment.pixels_normalized[0].x = line[0][0]
 				segment.pixels_normalized[0].y = line[0][1]
