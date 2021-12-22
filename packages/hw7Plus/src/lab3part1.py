@@ -100,9 +100,9 @@ class ImageFilter:
         self.overlay.publish(ROS_lines_B)
         
         # Testing output
-        test = white_edges			# Change this to test an image
-        ros_tested_img = self.bridge.cv2_to_imgmsg(test,"bgr8")
-        self.test.publish(ros_tested_img)
+        testing = white_edges			# Change this to test an image
+        ros_tested_img = self.bridge.cv2_to_imgmsg(testing,"bgr8")
+        self.testing.publish(ros_tested_img)
         
                 
     def output_lines_white(self, original_image, lines):
