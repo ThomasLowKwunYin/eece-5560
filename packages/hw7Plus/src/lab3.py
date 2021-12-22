@@ -75,31 +75,28 @@ class Node:
 			whiteNormalized =  (whiteHough  + arr_cutoff) * arr_ratio
 		for line in whiteNormalized:
 				segment.color = 0
-				segment.pixels_normalized[0].x = x1
-				segment.pixels_normalized[0].y = y1
-				segment.pixels_normalized[1].x = x2
-				segment.pixels_normalized[1].y = y2
+				segment.pixels_normalized[0].x = line[0][0]
+				segment.pixels_normalized[0].y = line[0][1]
+				segment.pixels_normalized[1].x = line[0][2]
+				segment.pixels_normalized[1].y = line[0][3]
 				segmentList.segments.append(segment)
 					
 		if yellowHough is not None:
 			yellowNormalized = (yellowHough + arr_cutoff) * arr_ratio
 			for line in yellowNormalized:
 				segment.color = 1
-				segment.pixels_normalized[0].x = yellowNormalized[0]
-				segment.pixels_normalized[0].y = yellowNormalized[1]
-				segment.pixels_normalized[1].x = yellowNormalized[2]
-				segment.pixels_normalized[1].y = yellowNormalized[3]
+				segment.pixels_normalized[0].x = line[0][0]
+				segment.pixels_normalized[0].y = line[0][1]
+				segment.pixels_normalized[1].x = line[0][2]
+				segment.pixels_normalized[1].y = line[0][3]
 				segmentList.segments.append(segment)
-					
-		self.lines.publish(segmentList)
+		
 		#stackingImg
 		whiteOut = self.output_lines_white(cropped_image, whiteHough)
 		whiteYellowOut = self.output_lines_both(whiteOut, yellowHough)
 		
 		#convert to ros img then pub
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
-	
-	def normalize(self, 
 		
 
 	def output_lines_white(self, original_image, lines):
