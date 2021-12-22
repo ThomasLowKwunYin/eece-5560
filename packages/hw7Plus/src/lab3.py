@@ -55,20 +55,20 @@ class Node:
 		yellowOverlay = cv2.bitwise_and(yellowEdges, yellowEdges, mask = croppedEdges)
 		
 		#edge to rgb
-		Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
-		Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
+		#Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
+		#Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
 		
 		#rgb to grey
-		whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
-		yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
+		#whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
+		#yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
 		
 		#Hough Transform
 		arr_cutoff = np.array([0, offset, 0, offset])
 		arr_ratio  = np.array([1. / image_Size[0], 1. / image_Size[1], 1. / image_Size[0], 1. / image_Size[1]])
 		
 		
-		whiteHough  = cv2.HoughLinesP(whiteGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
-		yellowHough = cv2.HoughLinesP(yellowGrey, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
+		whiteHough  = cv2.HoughLinesP(whiteOverlay, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
+		yellowHough = cv2.HoughLinesP(yellowOverlay, rho=1, theta=np.pi/180, threshold=7, minLineLength=10, maxLineGap=5)
 		
 		#Normalize and create segment
 		if whiteHough is not None:
