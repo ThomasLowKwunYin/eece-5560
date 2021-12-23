@@ -92,8 +92,8 @@ class Node:
 				segmentList.segments.append(segment)
 		
 		#stackingImg
-		whiteOut = self.output_lines_white(cropped_image, whiteHough)
-		whiteYellowOut = self.output_lines_both(whiteOut, yellowHough)
+		whiteOut = self.output_lines(cropped_image, whiteHough)
+		whiteYellowOut = self.output(whiteOut, yellowHough)
 		
 		#convert to ros img then pub
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
@@ -101,17 +101,8 @@ class Node:
 		if len(segmentList.segments) != 0:
 			self.lines.publish(segmentList)
 
-	def output_lines_white(self, original_image, lines):
-		output = np.copy(original_image)
-		if lines is not None:
-			for i in range(len(lines)):
-				l = lines[i][0]
-				cv2.line(output, (l[0],l[1]), (l[2],l[3]), (255,255,255), 2, cv2.LINE_AA)
-				cv2.circle(output, (l[0],l[1]), 2, (0,255,0))
-				cv2.circle(output, (l[2],l[3]), 2, (0,0,255))
-		return output
 		
-	def output_lines_both(self, original_image, lines):
+	def output_lines(self, original_image, lines):
 		output = np.copy(original_image)
 		if lines is not None:
 			for i in range(len(lines)):
