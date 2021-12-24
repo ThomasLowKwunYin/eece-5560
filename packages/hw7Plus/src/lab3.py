@@ -93,7 +93,7 @@ class Node:
 		
 		#stackingImg
 		whiteOut = self.output_lines(cropped_image, whiteHough)
-		whiteYellowOut = self.output(whiteOut, yellowHough)
+		whiteYellowOut = self.output_lines(whiteOut, yellowHough)
 		
 		#convert to ros img then pub
 		self.overlay.publish(self.bridge.cv2_to_imgmsg(whiteYellowOut,"bgr8"))
