@@ -36,7 +36,7 @@
     </include>
 
     <group ns="$(env VEHICLE_NAME)">
-        <node pkg="hw7Plus" name="lab3" type="lab3part1.py"/>
+        <node pkg="hw7Plus" name="lab3" type="lab3.py"/>
     </group>
 
 </launch>
