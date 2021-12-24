@@ -74,6 +74,7 @@ class Node:
 		if whiteHough is not None:
 			whiteNormalized =  (whiteHough  + arr_cutoff) * arr_ratio
 			for line in whiteNormalized:
+				segment = Segment()
 				segment.color = 0
 				segment.pixels_normalized[0].x = line[0][0]
 				segment.pixels_normalized[0].y = line[0][1]
@@ -84,6 +85,7 @@ class Node:
 		if yellowHough is not None:
 			yellowNormalized = (yellowHough + arr_cutoff) * arr_ratio
 			for line in yellowNormalized:
+				segment = Segment()
 				segment.color = 1
 				segment.pixels_normalized[0].x = line[0][0]
 				segment.pixels_normalized[0].y = line[0][1]
