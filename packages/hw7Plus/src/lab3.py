@@ -40,8 +40,6 @@ class Node:
 		yellow = cv2.dilate(yellow,self.kernel)
 		
 		#color only
-		#white  = cv2.bitwise_and(cropped_image, cropped_image, mask=white)		
-		#yellow = cv2.bitwise_and(cropped_image, cropped_image, mask=yellow)
 		
 		#crop, canny edge detection and extra dilate
 		croppedEdges = cv2.Canny(cropped_image, 10, 255)
@@ -53,14 +51,6 @@ class Node:
 		#overlay
 		whiteOverlay  = cv2.bitwise_and(whiteEdges,  whiteEdges,  mask = croppedEdges)
 		yellowOverlay = cv2.bitwise_and(yellowEdges, yellowEdges, mask = croppedEdges)
-		
-		#edge to rgb
-		#Whitergb = cv2.cvtColor(whiteOverlay,  cv2.COLOR_HSV2RGB)
-		#Yellowrgb = cv2.cvtColor(yellowOverlay,  cv2.COLOR_HSV2RGB)
-		
-		#rgb to grey
-		#whiteGrey = cv2.cvtColor(Whitergb,  cv2.COLOR_HSV2RGB)
-		#yellowGrey = cv2.cvtColor(Yellowrgb,  cv2.COLOR_HSV2RGB)
 		
 		#Hough Transform
 		arr_cutoff = np.array([0, offset, 0, offset])
