@@ -8,9 +8,9 @@ class HW10:
 	def fiboserv(self, i):
         rospy.wait_for_service('/calc_fibonacci')
         try:
-            fib=rospy.ServiceProxy('/calc_fibonacci', Fibonacci)
+            fibonacci=rospy.ServiceProxy('/calc_fibonacci', Fibonacci)
             start_time = rospy.get_time()
-            fib1 = fib(x)
+            fib1 = fibonacci(x)
             rospy.loginfo(f"received at {rospy.get_time()-start_time}sec", )
         except rospy.ServiceException as error:
             rospy.loginfo(f"Service call failed: {%error}" )
