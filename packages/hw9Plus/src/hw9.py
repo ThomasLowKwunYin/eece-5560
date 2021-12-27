@@ -17,7 +17,6 @@ class node:
 		self.error = 0
 		self.prevError = 0
 		self.errorDelta = 0
-		self.dt = 0.01
 		self.timeInit = rospy.get_time()
 	def talk(self, msg):
 		rospy.logwarn(msg.data)
