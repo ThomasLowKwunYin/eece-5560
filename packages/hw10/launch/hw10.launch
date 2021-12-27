@@ -1,12 +1,7 @@
 <launch>
   <node pkg="hw10" name="hw10" type="hw10.py"/>
-
-  
   <include file="$(find example_service)/launch/fibonacci.launch">
   </include>
-  
   <include file="$(find example_action_server)/launch/fibonacci.launch">
-
   </include>
-
 </launch>
