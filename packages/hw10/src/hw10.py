@@ -6,19 +6,17 @@ import example_service.srv
 import actionlib
 class HW10:
 	def fiboserv(self, i):
-        rospy.wait_for_service('/calc_fibonacci')
-        try:
-            fibonacci=rospy.ServiceProxy('/calc_fibonacci', Fibonacci)
-            start_time = rospy.get_time()
-            fib1 = fibonacci(x)
-            rospy.loginfo(f"received at {rospy.get_time()-start_time}sec", )
-        except rospy.ServiceException as error:
-            rospy.loginfo(f"Service call failed: {%error}" )
-		
-		
+		rospy.wait_for_service('/calc_fibonacci')
+		try:
+			fibonacci=rospy.ServiceProxy('/calc_fibonacci', Fibonacci)
+			start_time = rospy.get_time()
+			fib1 = fibonacci(x)
+			rospy.loginfo(f"received at {rospy.get_time()-start_time}sec", )
+		except rospy.ServiceException as error:
+			rospy.loginfo(f"Service call failed" )
 		
 	def fiboact(self, i):
-		client = actionlib.SimpleActionClient('fibonacci' example_action_server.msg.FibonacciAction)
+		client = actionlib.SimpleActionClient('fibonacci', example_action_server.msg.FibonacciAction)
 		client.wait_for_server()
 		goal = example_action_server.msg.FibonacciGoal(order=i)
 		startTime = rospy.get_time()
@@ -27,13 +25,11 @@ class HW10:
 		startTime = rospy.get_time()
 		rospy.loginfo(f"Answer returned time: {rospy.get_time()-startTime}sec")
 		client.wait_for_result()
-		
 		return client.get_result()
-	
-if __name__ == '__main__'
+if __name__ == '__main__':
 	rospy.init_node('hw10')
 	node = HW10
-	node.fiboserv(3)
-	node.fiboact(3)
-	node.fiboserv(15)
-	node.fiboact(15)
+	node.fiboserv(self,3)
+	node.fiboact(self,3)
+	node.fiboserv(self,15)
+	node.fiboact(self,15)
