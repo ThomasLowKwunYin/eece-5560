@@ -28,8 +28,7 @@ class HW10:
 		return client.get_result()
 if __name__ == '__main__':
 	rospy.init_node('hw10')
-	node = HW10
-	node.fiboserv(self,3)
-	node.fiboact(self,3)
-	node.fiboserv(self,15)
-	node.fiboact(self,15)
+	HW10.fiboserv(3)
+	HW10.fiboact(3)
+	HW10.fiboserv(15)
+	HW10.fiboact(15)
