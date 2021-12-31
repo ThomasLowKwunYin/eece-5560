@@ -2,7 +2,7 @@
 
 import rospy
 import example_action_server.msg
-import example_service.srv
+from example_service.srv import *
 import actionlib
 class HW10:
 	def fiboserv(self, i):
@@ -10,10 +10,10 @@ class HW10:
 		try:
 			fibonacci=rospy.ServiceProxy('/calc_fibonacci', Fibonacci)
 			start_time = rospy.get_time()
-			fib1 = fibonacci(x)
-			rospy.loginfo(f"received at {rospy.get_time()-start_time}sec", )
+			fib1 = fibonacci(i)
+			rospy.logwarn(f"case:{i}, received at {rospy.get_time()-start_time}sec", )
 		except rospy.ServiceException as error:
-			rospy.loginfo(f"Service call failed" )
+			rospy.logwarn(f"Service call failed" )
 		
 	def fiboact(self, i):
 		client = actionlib.SimpleActionClient('fibonacci', example_action_server.msg.FibonacciAction)
@@ -21,9 +21,9 @@ class HW10:
 		goal = example_action_server.msg.FibonacciGoal(order=i)
 		startTime = rospy.get_time()
 		client.send_goal(goal)
-		rospy.loginfo(f"Request returned time: {rospy.get_time()-startTime}sec")
+		rospy.logwarn(f" case:{i}, Request returned time: {rospy.get_time()-startTime}sec")
 		startTime = rospy.get_time()
-		rospy.loginfo(f"Answer returned time: {rospy.get_time()-startTime}sec")
+		rospy.logwarn(f"case:{i}, Answer returned time: {rospy.get_time()-startTime}sec")
 		client.wait_for_result()
 		return client.get_result()
 if __name__ == '__main__':
