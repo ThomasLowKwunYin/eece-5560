@@ -36,8 +36,19 @@ class Node:
 			if self.flag == False:
 				rospy.logwarn("Lane Following")
 				self.flag = True
-			if len(msg.detections) != 0:
-				z = self.sign_Pos[0]
-                x = self.sign_Pos[1]
+			#turning adjectments
+			PosError = 0 - msg.d
+			AngError = 0 - msg.phi
+			if PosError > self.PositiontErrorMax:
+				PosError = self.PositiontErrorMax
+			else PosError< self.PositiontErrorMin:
+				PosError = self.PositiontErrorMin
+				
+			PosPIDsum = self.PositionPID.run(PosError)
+			AngPIDsum = self.AnglePID.run(AngError)
+			error = PosPIDsum + AngPIDsum
+			vError = abs(0.4*(error/(1-error)))
+			
+			
 			
 			
