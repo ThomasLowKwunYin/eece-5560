@@ -3,7 +3,7 @@
 import rospy
 
 class PID:
-	ssdef __init__(self,pid,t):
+	def __init__(self,pid,t):
 		self.kp = pid[0]
 		self.ki = pid[1]
 		self.kd = pid[2]
@@ -11,12 +11,12 @@ class PID:
 
 		self.prevError = 0
 		self.errorIntegral = None
-		self.prevError = 0
 		self.errorDelta = None
        
 	def talk(self,error):
 		if errorIntegral == None:
     		self.errorDelta = 0
+		self.errorIntegral = 0
 		else:
 			self.errorDelta = (error-self.prevError)/self.dt
 		self.errorIntegral += error		
