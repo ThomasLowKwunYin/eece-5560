@@ -31,10 +31,10 @@ class Node:
         self.state = state.state
         
 	def talk(self,msg)
-		Vector = Twisted2DStamped()
-		if self,state == "LANE_FOLLOWING":
+		Vector = Twisted2DStamped() #drive vector
+		if self.state == "LANE_FOLLOWING":
 			if self.flag == False:
-				rospy.logwarn("Lane Following")
+				rospy.logwarn(self.state)
 				self.flag = True
 			#turning adjectments
 			PosError = 0 - msg.d
@@ -44,11 +44,28 @@ class Node:
 			else PosError< self.PositiontErrorMin:
 				PosError = self.PositiontErrorMin
 				
-			PosPIDsum = self.PositionPID.run(PosError)
-			AngPIDsum = self.AnglePID.run(AngError)
-			error = PosPIDsum + AngPIDsum
+			error = self.PositionPID.run(PosError) + self.AnglePID.run(AngError)
 			vError = abs(0.4*(error/(1-error)))
+			rospy.logwarn=(f"Vector Error:{str(vError)} ")
+			if vError <.4:
+				Vector.v = .4-vError
+			else:
+				Vector.v = 0
+				error = error*3
+			rospy.logwarn=(f"Error:{str(Error)} ")
+			Vector.omega  = self.trim + err
+			self.pub.publish(Vector)
 			
-			
-			
-			
+		elif self.state == "NORMAL_JOYSTICK_CONTROL":
+			if self.flag == True:
+                rospy.logwarn(self.state)
+                self.flag = False
+			Vector.v = 0
+			Vector.omega = 0
+			self.pub.publish(Vector)
+		rospy.logwarn=(f"Vector:{str(V)} ")
+
+if __name__ == "__main__":
+    rospy.init_node("lab4", anonymous=True)
+    Node()
+    rospy.spin()
