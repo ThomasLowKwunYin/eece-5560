@@ -1,4 +1,4 @@
-launch>
+<launch>
 
     <arg name="veh" default="$(env VEHICLE_NAME)"/>
     <arg name="ai_trafo_mode" default="cb" doc="'cb' for colo balance only; 'both' for color balance and linear trafo"/>
@@ -31,13 +31,13 @@ launch>
         <arg name="line_detector_param_file_name" value="default" />
         <arg name="/lane_following/ground_projection" value="true"/>
         <arg name="/lane_following/lane_filter" value="true"/>
-        <arg name="/lane_following/lane_controller" value="true"/>
+        <arg name="/lane_following/lane_controller" value="false"/>
 
     </include>
 
     <group ns="$(env VEHICLE_NAME)">
-        <node pkg="lab4" type="lab4.py" name="lab4"/>
-        <node pkg="lab4" name="lab4Control" type="lab4Control.py"/>
+     <node pkg="lab4" type="lab4.py" name="lab4"/>
+     <node pkg="lab4" name="lab4Control" type="lab4Control.py"/>
     </group>
 
 </launch>
