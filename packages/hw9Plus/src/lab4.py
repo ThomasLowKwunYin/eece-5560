@@ -6,7 +6,7 @@ from std_msgs.msg import Float32
 from duckietown_msgs.msg import AprilTagDetectionArray, Twist2DStamped, FSMState
 import lab4Control as PID
 
-class lab4
+class lab4:
 	def __init__(self):
 		
 		self.pub = rospy.Publisher('lane_controller_node/car_cmd', Twist2DStamped, queue_size=10)
