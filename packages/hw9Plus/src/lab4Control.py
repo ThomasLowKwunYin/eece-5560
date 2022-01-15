@@ -16,7 +16,7 @@ class PID:
 	def talk(self,error):
 		if errorIntegral == None:
 			self.errorDelta = 0
-		self.errorIntegral = 0
+			self.errorIntegral = 0
 		else:
 			self.errorDelta = (error-self.prevError)/self.dt
 		self.errorIntegral += error		
