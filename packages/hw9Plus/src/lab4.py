@@ -28,7 +28,8 @@ class lab4:
 		self.signPos = None
 
 	def control(self, state):
-        self.state = state.state
+		self.state = state.state
+
 	def tracking(self,msg):
 		vector = Twist2DStamped()
 		#check for error for PID controller 
