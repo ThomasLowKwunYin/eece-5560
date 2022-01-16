@@ -1,0 +1,24 @@
+<launch>
+
+  <group ns="$(env VEHICLE_NAME)"> 
+
+    <node pkg="lab4" name="lab4" type="lab4.py"/>
+    <node pkg="lab4" name="PIDControllerClass" type="lab4Control.py"/>
+
+  </group>
+
+
+
+  <include file="$(find fsm)/launch/fsm_node.launch">
+
+        <arg name="veh" value="$(env VEHICLE_NAME)"/>
+        <arg name="param_file_name" value="lane_following"/>
+
+  </include>
+  <include file="$(find duckietown_demos)/launch/apriltag_detector.launch">
+
+        <arg name="veh" value="$(env VEHICLE_NAME)"/>
+
+  </include>
+
+</launch>
