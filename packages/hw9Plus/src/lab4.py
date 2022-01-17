@@ -42,7 +42,7 @@ class lab4:
 			self.signPos = [z, x]
 		else:
 			if self.noDetect == 0:
-				rospy.logwar("No signal")
+				rospy.logwarn("No signal")
 				self.detect = 0
 				self.noDetect = 1
 				
