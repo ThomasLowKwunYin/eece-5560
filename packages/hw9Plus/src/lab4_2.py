@@ -28,8 +28,8 @@ class Node:
 		self.signPos = None
 		
 	def control(self, state):
-        self.state = state.state
-        
+		self.state = state.state
+
 	def talk(self,msg)
 		Vector = Twisted2DStamped() #drive vector
 		if self.state == "LANE_FOLLOWING":
@@ -58,14 +58,14 @@ class Node:
 			
 		elif self.state == "NORMAL_JOYSTICK_CONTROL":
 			if self.flag == True:
-                rospy.logwarn(self.state)
-                self.flag = False
+				rospy.logwarn(self.state)
+				self.flag = False
 			Vector.v = 0
 			Vector.omega = 0
 			self.pub.publish(Vector)
 		rospy.logwarn=(f"Vector:{str(V)} ")
 
 if __name__ == "__main__":
-    rospy.init_node("lab4", anonymous=True)
-    Node()
-    rospy.spin()
+	rospy.init_node("lab4", anonymous=True)
+	Node()
+	rospy.spin()
