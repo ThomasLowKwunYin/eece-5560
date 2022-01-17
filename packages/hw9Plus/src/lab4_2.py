@@ -30,7 +30,7 @@ class Node:
 	def control(self, state):
 		self.state = state.state
 
-	def talk(self,msg)
+	def talk(self,msg):
 		Vector = Twisted2DStamped() #drive vector
 		if self.state == "LANE_FOLLOWING":
 			if self.flag == False:
