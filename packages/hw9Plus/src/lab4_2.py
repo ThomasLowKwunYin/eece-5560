@@ -52,7 +52,7 @@ class Node:
 			else:
 				Vector.v = 0
 				error = error*3
-			rospy.logwarn=(f"Error:{str(Error)} ")
+			rospy.logwarn=(f"Error:{str(error)} ")
 			Vector.omega  = self.trim + err
 			self.pub.publish(Vector)
 			
