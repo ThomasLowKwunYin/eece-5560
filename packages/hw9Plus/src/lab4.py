@@ -10,7 +10,7 @@ class lab4:
 	def __init__(self):
 		
 		self.pub = rospy.Publisher('lane_controller_node/car_cmd', Twist2DStamped, queue_size=10)
-		rospy.Subscriber("apriltag_detector_node/detections", AprilTagDetectionArray, self.detected)
+		rospy.Subscriber("apriltag_detector_node/detections", AprilTagDetectionArray, self.tracking)
 		rospy.Subscriber('fsm_node/mode', FSMState, self.control)
 	
 		self.flag = False

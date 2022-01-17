@@ -9,7 +9,7 @@ import lab4Control as PID
 class Node:
 	def __init__(self):
 		self.pub = rospy.Publisher('lane_controller_node/car_cmd', Twist2DStamped, queue_size=10)
-		rospy.Subscriber('fsm_node/mode', FSMState, self.state)
+		rospy.Subscriber('fsm_node/mode', FSMState, self.talk)
 		rospy.Subscriber('lane_filter_node/lane_pose', LanePose, self.control)
 		
 		dt = .01
