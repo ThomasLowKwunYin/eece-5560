@@ -63,7 +63,7 @@ class Node:
 			Vector.v = 0
 			Vector.omega = 0
 			self.pub.publish(Vector)
-		rospy.logwarn=(f"Vector:{str(V)} ")
+		rospy.logwarn=(f"Vector:{str(Vector)} ")
 
 if __name__ == "__main__":
 	rospy.init_node("lab4", anonymous=True)
