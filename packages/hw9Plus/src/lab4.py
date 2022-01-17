@@ -40,8 +40,7 @@ class lab4:
 			z = msg.detections[0].transform.translation.z
 			x = msg.detections[0].transform.translation.x
 			self.signPos = [z, x]
-			rospy.logwarn(f"z: {z}")
-			rospy.logwarn(f"x: {x}")
+			rospy.logwarn(f"z: {z}, x: {x}")
 		else:
 			if self.noDetect == 0:
 				rospy.logwarn("No signal")
