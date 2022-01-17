@@ -36,9 +36,9 @@
     </include>
 
     <group ns="$(env VEHICLE_NAME)">
-        <node pkg="lab3" type="lab3.py" name="lab3"/>
-        <node pkg="lab4" type="lab4_2.py" name="lab4_2"/>
-        <node pkg="lab4" type="lab4Control.py" name="lab4Control"/>
+        <node pkg="hw9Plus" type="lab3.py" name="lab3"/>
+        <node pkg="hw9Plus" type="lab4_2.py" name="lab4_2"/>
+        <node pkg="hw9Plus" type="lab4Control.py" name="lab4Control"/>
     </group>
 
 </launch>
