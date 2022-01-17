@@ -14,7 +14,7 @@ class PID:
 		self.errorDelta = None
 		
 	def talk(self,error):
-		if errorIntegral == None:
+		if self.errorIntegral == None:
 			self.errorDelta = 0
 			self.errorIntegral = 0
 		else:
