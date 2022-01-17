@@ -74,7 +74,7 @@ class lab4:
 				vector.omega = 0
 				self.pub.publish(vector)
 		else:
-			if msg.state != "LANE_FOLLOWING":
+			if self.state != "LANE_FOLLOWING":
 				self.flag = False
 			vector.v = 0
 			vector.omega = 0
