@@ -9,8 +9,8 @@ import lab4Control as PID
 class Node:
 	def __init__(self):
 		self.pub = rospy.Publisher('lane_controller_node/car_cmd', Twist2DStamped, queue_size=10)
-		rospy.Subscriber('fsm_node/mode', FSMState, self.talk)
-		rospy.Subscriber('lane_filter_node/lane_pose', LanePose, self.control)
+		rospy.Subscriber('fsm_node/mode', FSMState, self.control)
+		rospy.Subscriber('lane_filter_node/lane_pose', LanePose, self.talk)
 		
 		dt = .01
 		self.flag = False
@@ -31,7 +31,7 @@ class Node:
 		self.state = state.state
 
 	def talk(self,msg):
-		Vector = Twisted2DStamped() #drive vector
+		Vector = Twist2DStamped() #drive vector
 		if self.state == "LANE_FOLLOWING":
 			if self.flag == False:
 				rospy.logwarn(self.state)
