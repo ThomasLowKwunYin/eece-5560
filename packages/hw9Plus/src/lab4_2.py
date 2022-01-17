@@ -44,7 +44,7 @@ class Node:
 			elif PosError< self.PositiontErrorMin:
 				PosError = self.PositiontErrorMin
 				
-			error = self.PositionPID.run(PosError) + self.AnglePID.run(AngError)
+			error = self.PositionPID.talk(PosError) + self.AnglePID.talk(AngError)
 			vError = abs(0.4*(error/(1-error)))
 			rospy.logwarn=(f"Vector Error:{str(vError)} ")
 			if vError <.4:
