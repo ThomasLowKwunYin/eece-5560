@@ -39,6 +39,7 @@ class Node:
 			#turning adjectments
 			PosError = 0 - msg.d
 			AngError = 0 - msg.phi
+			rospy.logwarn(f"PosError:{PosError}, AngError:{AngError}")
 			if PosError > self.PositiontErrorMax:
 				PosError = self.PositiontErrorMax
 			elif PosError< self.PositiontErrorMin:
