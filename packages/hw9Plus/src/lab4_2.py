@@ -34,7 +34,7 @@ class Node:
 		Vector = Twist2DStamped() #drive vector
 		if self.state == "LANE_FOLLOWING":
 			if self.flag == False:
-				rospy.logwarn(self.state)
+				rospy.logwarn(str(self.state))
 				self.flag = True
 			#turning adjectments
 			PosError = 0 - msg.d
@@ -53,7 +53,7 @@ class Node:
 				Vector.v = 0
 				error = error*3
 			rospy.logwarn=(f"Error:{str(error)} ")
-			Vector.omega  = self.trim + err
+			Vector.omega  = self.trim + error
 			self.pub.publish(Vector)
 			
 		elif self.state == "NORMAL_JOYSTICK_CONTROL":
