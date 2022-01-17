@@ -41,7 +41,7 @@ class Node:
 			AngError = 0 - msg.phi
 			if PosError > self.PositiontErrorMax:
 				PosError = self.PositiontErrorMax
-			else PosError< self.PositiontErrorMin:
+			elif PosError< self.PositiontErrorMin:
 				PosError = self.PositiontErrorMin
 				
 			error = self.PositionPID.run(PosError) + self.AnglePID.run(AngError)
