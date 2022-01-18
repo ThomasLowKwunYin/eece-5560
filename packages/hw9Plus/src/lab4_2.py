@@ -58,7 +58,7 @@ class Node:
 			self.pub.publish(Vector)
 			
 		else:
-			if msg.state != "LANE_FOLLOWING":
+			if self.state != "LANE_FOLLOWING":
 				rospy.logwarn(str(self.state))
 				self.flag = False
 			Vector.v = 0
