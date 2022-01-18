@@ -32,10 +32,10 @@ class Node:
 
 	def talk(self,msg):
 		Vector = Twist2DStamped() #drive vector
-		if self.state == "LANE_FOLLOWING":
-			if self.flag == False:
-				rospy.logwarn(str(self.state))
-				self.flag = True
+		rospy.logwarn("start")
+		if self.state == "LANE_FOLLOWING" and self.flag == False:
+			rospy.logwarn(str(self.state))
+			self.flag = True
 			#turning adjectments
 			PosError = 0 - msg.d
 			AngError = 0 - msg.phi
@@ -57,9 +57,9 @@ class Node:
 			Vector.omega  = self.trim + error
 			self.pub.publish(Vector)
 			
-		elif self.state == "NORMAL_JOYSTICK_CONTROL":
-			if self.flag == True:
-				rospy.logwarn(self.state)
+		else:
+			if msg.state != "LANE_FOLLOWING":
+				rospy.logwarn(str(self.state))
 				self.flag = False
 			Vector.v = 0
 			Vector.omega = 0
