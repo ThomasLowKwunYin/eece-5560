@@ -34,7 +34,7 @@ class Node:
 		Vector = Twist2DStamped() #drive vector
 		rospy.logwarn("start")
 		if self.state == "LANE_FOLLOWING" and self.flag == False:
-			rospy.logwarn(str(self.state))
+			rospy.logwarn(self.state)
 			self.flag = True
 			#turning adjectments
 			PosError = 0 - msg.d
@@ -47,24 +47,24 @@ class Node:
 				
 			error = self.PositionPID.talk(PosError) + self.AnglePID.talk(AngError)
 			vError = abs(0.4*(error/(1-error)))
-			rospy.logwarn=(f"Vector Error:{str(vError)} ")
+			rospy.logwarn(f"Vector Error:{str(vError)} ")
 			if vError <.4:
 				Vector.v = .4-vError
 			else:
 				Vector.v = 0
 				error = error*3
-			rospy.logwarn=(f"Error:{str(error)} ")
+			rospy.logwarn(f"Error:{error} ")
 			Vector.omega  = self.trim + error
 			self.pub.publish(Vector)
 			
 		else:
 			if self.state != "LANE_FOLLOWING":
-				rospy.logwarn(str(self.state))
+				rospy.logwarn(self.state)
 				self.flag = False
 			Vector.v = 0
 			Vector.omega = 0
 			self.pub.publish(Vector)
-		rospy.logwarn=(f"Vector:{str(Vector)} ")
+		rospy.logwarn(f"Vector:{Vector} ")
 
 if __name__ == "__main__":
 	rospy.init_node("lab4", anonymous=True)
