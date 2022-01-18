@@ -32,7 +32,7 @@ class Node:
 
 	def talk(self,msg):
 		Vector = Twist2DStamped() #drive vector
-		rospy.logwarn("start")
+		rospy.logwarn(str("start"))
 		if self.state == "LANE_FOLLOWING" and self.flag == False:
 			rospy.logwarn(str(self.state))
 			self.flag = True
