@@ -55,7 +55,7 @@ class Node:
 				error = error*3
 			rospy.logwarn(f"Error:{error} ")
 			Vector.omega  = self.trim + error
-			self.pub.publish(Vector)
+			self.pub.publsh(Vector)
 			
 		else:
 			if self.state != "LANE_FOLLOWING":
@@ -64,7 +64,7 @@ class Node:
 			Vector.v = 0
 			Vector.omega = 0
 			self.pub.publish(Vector)
-		rospy.logwarn(f"Vector:{Vector} ")
+		#rospy.logwarn(f"Vector:{Vector} ")
 
 if __name__ == "__main__":
 	rospy.init_node("lab4", anonymous=True)
