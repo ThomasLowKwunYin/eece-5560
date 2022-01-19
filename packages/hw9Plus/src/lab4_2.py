@@ -33,7 +33,7 @@ class Node:
 	def talk(self,msg):
 		Vector = Twist2DStamped() #drive vector
 		rospy.logwarn("start")
-		if self.state == "LANE_FOLLOWING" and self.flag == False:
+		if self.state == "LANE_FOLLOWING":
 			rospy.logwarn(self.state)
 			self.flag = True
 			#turning adjectments
