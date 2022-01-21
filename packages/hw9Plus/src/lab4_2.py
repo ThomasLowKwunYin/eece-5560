@@ -19,7 +19,7 @@ class Node:
 		PositionPIDParam = [1,0,0]
 		self.PositiontErrorMax = 0.15
 		self. PositiontErrorMin = -.12
-		AnglePIDParam = [1.2,0,0]
+		AnglePIDParam = [1.1,0,0]
 		self.AngleErrorMax = 0.15
 		self.AngleErrorMin = -.12
 		
